@@ -6,7 +6,7 @@
 // @grant	GM_getValue
 // @grant	GM_setValue
 // @grant	GM_deleteValue
-// @grant	GM_registerMenuCommand
+// @grant GM_registerMenuCommand
 // @author	Cowrod
 // @version	0.0.1
 // @updateURL	https://raw.githubusercontent.com/Cowrod/userscript/main/auto_refresher.js
@@ -33,3 +33,4 @@ GM_registerMenuCommand("Toggle Site Refresher",()=>{if(!Number(GM_getValue(windo
 GM_registerMenuCommand("Toggle Debug Mode",()=>{GM_setValue("debug",!GM_getValue("debug"));alert("Auto Refresher Debug State: "+(GM_getValue("debug")&&"On"||"Off"))})
 GM_registerMenuCommand("Change Minimum Value",()=>{var delay = prompt("Enter New Minimum Value [Min Value: "+GM_getValue("min")+"]", "1000 (1 second in milisecond)");if(Number(delay)){GM_setValue("min",delay)}alert("Minimum Is Set To "+GM_getValue("min")+"ms")})
 GM_registerMenuCommand("Change Maximum Value",()=>{var delay=prompt("Enter New Maximum Value [Min Value: "+GM_getValue("max")+"]", "1000 (1 second in milisecond)");if(Number(delay)){GM_setValue("max",delay)}alert("Maximum Is Set To "+GM_getValue("max")+"ms")})
+GM_registerMenuCommand("View Stats",()=>{alert("Refresher State: "+(GM_getValue(window.location.href)&&"Online\nRefresher Rate: "+GM_getValue(window.location.href)+"ms\n"||"Offline\n")+"Minimum Random Value: "+(Number(GM_getValue("min"))&&GM_getValue("min")+"ms"||"null")+"\nMaximum Random Value: "+(Number(GM_getValue("max"))&&GM_getValue("max")+"ms"||"null")+"\nDebugger State: "+(GM_getValue("debug")&&"On"||"Off"))})

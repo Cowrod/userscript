@@ -8,7 +8,7 @@
 // @grant	GM_deleteValue
 // @grant GM_registerMenuCommand
 // @author	Cowrod
-// @version	0.0.1
+// @version	0.0.2
 // @updateURL	https://raw.githubusercontent.com/Cowrod/userscript/main/auto_refresher.js
 // @downloadURL	https://github.com/Cowrod/userscript/blob/main/auto_refresher.js
 // @run-at	document-end

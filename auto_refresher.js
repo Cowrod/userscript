@@ -8,7 +8,7 @@
 // @grant	GM_deleteValue
 // @grant	GM_registerMenuCommand
 // @author	Cowrod
-// @version	0.0.4
+// @version	0.0.5
 // @updateURL	https://raw.githubusercontent.com/Cowrod/userscript/main/auto_refresher.js
 // @downloadURL	https://raw.githubusercontent.com/Cowrod/userscript/main/auto_refresher.js
 // @run-at	document-end
@@ -20,7 +20,7 @@ function formatTime($){let o=$/1e3;if(o<1)return $+" millisecond(s)";if(o<60)ret
 function betterRandom(min,max){if(min&&!max){var max=min;var min=0};var min=Number(min)||0;var max=Number(max)||1;const minmax=((n,m)=>{if(n>m){return[m,n]};if(n==m){return[n,m+1e-323]};return[n,m]})(((min==0||min==-0)&&1e-323||min),((max==0||max==-0)&&1e-323||max));if(minmax[0]>-0&&minmax[1]>-0){return(Math.random()*minmax[1])-minmax[0]}else{if(minmax[0]<0&&minmax[1]>-0){return(Math.random()*(minmax[1]+ -minmax[0]))+minmax[0]}else{if(minmax[0]<0&&minmax[1]<0){return(Math.random()*minmax[1])-minmax[0]}}}}
 
 // Refresher
-function Preload(){if(Number(GM_getValue(location.href))){var rnd=Math.florr(betterRandom(GM_getValue("min")||0,GM_getValue("max")||1));if(GM_getValue("debug")){console.log("will refresh in "+formatTime(rnd)+" if refresh still on")}setTimeout(()=>{if(GM_getValue(location.href)){if(GM_getValue("debug")){console.log("refreshed in "+formatTime(new Date().valueOf()-lastRenew))};lastRenew=new Date().valueOf();location.reload()}},rnd)}}
+function Preload(){if(Number(GM_getValue(location.href))){var rnd=Math.floor(betterRandom(GM_getValue("min")||0,GM_getValue("max")||1));if(GM_getValue("debug")){console.log("will refresh in "+formatTime(rnd)+" if refresh still on")}setTimeout(()=>{if(GM_getValue(location.href)){if(GM_getValue("debug")){console.log("refreshed in "+formatTime(new Date().valueOf()-lastRenew))};lastRenew=new Date().valueOf();location.reload()}},rnd)}}
 
 // Main Loop
 function load(){var startData=GM_getValue(location.href);const loop=setInterval(()=>{if(!(GM_getValue(location.href)==startData)){clearInterval(loop);if(Number(GM_getValue(location.href))){if(GM_getValue("debug")){console.log("refreshed loop in "+formatTime(new Date().valueOf()-lastRenew))};lastRenew=new Date().valueOf();load()}}else{if(GM_getValue("debug")){console.log("fired refresh in "+formatTime(new Date().valueOf()-lastRenew))};Preload()}},startData)}

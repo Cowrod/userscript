@@ -8,7 +8,7 @@
 // @grant	GM_deleteValue
 // @grant GM_registerMenuCommand
 // @author	Cowrod
-// @version	0.0.3
+// @version	0.0.4
 // @updateURL	https://raw.githubusercontent.com/Cowrod/userscript/main/auto_refresher.js
 // @downloadURL	https://raw.githubusercontent.com/Cowrod/userscript/main/auto_refresher.js
 // @run-at	document-end
@@ -19,9 +19,8 @@ var lastRenew = new Date().valueOf()
 function formatTime($){let o=$/1e3;if(o<1)return $+" millisecond(s)";if(o<60)return o+" second(s)";if(o<3600){let r;return Math.floor(o/60)+" minute(s) and "+(o=Math.floor(o%60))+" second(s)"}if(o<86400){let e=Math.floor(o/3600),s;return e+" hour(s), "+Math.floor((o%=3600)/60)+" minute(s), and "+(o=Math.floor(o%60))+" second(s)"}if(o<2592e3){let l=Math.floor(o/86400),f=Math.floor((o%=86400)/3600),n=Math.floor((o%=3600)/60);return l+" day(s), "+f+" hour(s), "+n+" minute(s), and "+(o=Math.floor(o%60))+" second(s)"}else if(o<31536e3){let t=Math.floor(o/2592e3),u=Math.floor((o%=2592e3)/86400),d=Math.floor((o%=86400)/3600),i=Math.floor((o%=3600)/60);return t+" month(s), "+u+" day(s), "+d+" hour(s), "+i+" minute(s), and "+(o=Math.floor(o%60))+" second(s)"}else{let a=Math.floor(o/31536e3),m=Math.floor((o%=31536e3)/2592e3),c=Math.floor((o%=2592e3)/86400),h=Math.floor((o%=86400)/3600),_=Math.floor((o%=3600)/60);return a+" year(s), "+m+" month(s), "+c+" day(s), "+h+" hour(s), "+_+" minute(s), and "+(o=Math.floor(o%60))+" second(s)"}}
 function betterRandom(min,max){if(min&&!max){var max=min;var min=0};var min=Number(min)||0;var max=Number(max)||1;const minmax=((n,m)=>{if(n>m){return[m,n]};if(n==m){return[n,m+1e-323]};return[n,m]})(((min==0||min==-0)&&1e-323||min),((max==0||max==-0)&&1e-323||max));if(minmax[0]>-0&&minmax[1]>-0){return(Math.random()*minmax[1])-minmax[0]}else{if(minmax[0]<0&&minmax[1]>-0){return(Math.random()*(minmax[1]+ -minmax[0]))+minmax[0]}else{if(minmax[0]<0&&minmax[1]<0){return(Math.random()*minmax[1])-minmax[0]}}}}
 
-
 // Refresher
-function Preload(){if(Number(GM_getValue(location.href))){if(GM_getValue("debug")){console.log("will refresh in "+formatTime(GM_getValue(location.href))+" if refresh still on")}setTimeout(()=>{if(GM_getValue(location.href)){if(GM_getValue("debug")){console.log("refreshed in "+formatTime(new Date().valueOf()-lastRenew))};lastRenew=new Date().valueOf();location.reload()}},betterRandom(GM_getValue("min")||0,GM_getValue("max")||1))}}
+function Preload(){if(Number(GM_getValue(location.href))){var rnd=Math.florr(betterRandom(GM_getValue("min")||0,GM_getValue("max")||1));if(GM_getValue("debug")){console.log("will refresh in "+formatTime(rnd)+" if refresh still on")}setTimeout(()=>{if(GM_getValue(location.href)){if(GM_getValue("debug")){console.log("refreshed in "+formatTime(new Date().valueOf()-lastRenew))};lastRenew=new Date().valueOf();location.reload()}},rnd)}}
 
 // Main Loop
 function load(){var startData=GM_getValue(location.href);const loop=setInterval(()=>{if(!(GM_getValue(location.href)==startData)){clearInterval(loop);if(Number(GM_getValue(location.href))){if(GM_getValue("debug")){console.log("refreshed loop in "+formatTime(new Date().valueOf()-lastRenew))};lastRenew=new Date().valueOf();load()}}else{if(GM_getValue("debug")){console.log("fired refresh in "+formatTime(new Date().valueOf()-lastRenew))};Preload()}},startData)}

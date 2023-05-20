@@ -6,7 +6,7 @@
 // @grant	GM_getValue
 // @grant	GM_setValue
 // @grant	GM_deleteValue
-// @grant GM_registerMenuCommand
+// @grant	GM_registerMenuCommand
 // @author	Cowrod
 // @version	0.0.4
 // @updateURL	https://raw.githubusercontent.com/Cowrod/userscript/main/auto_refresher.js
